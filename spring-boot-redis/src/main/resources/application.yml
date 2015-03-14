@@ -1,0 +1,13 @@
+environments:
+    dev:
+        url: http://dev.bar.com
+        name: Developer Setup
+    prod:
+        url: http://foo.bar.com
+        name: My Cool App
+spring:
+#    profiles: development
+    redis:
+        host: yun1.ccssoft.com.cn
+        port: 6379
+        password: ccssoft

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="zhangSan" class="org.apache.spring.service.impl.ZhangSan"></bean>
+	<bean id="liSi" class="org.apache.spring.service.impl.LiSi"></bean>
+	<bean id="work" class="org.apache.spring.service.Work">
+		<property name="tester" ref="liSi"></property>
+	</bean>
+
+	<!-- 属性注入 -->
+	<bean id="people3" class="org.apache.spring.entity.People">
+		<property name="id" value="3"></property>
+		<property name="name" value="张三"></property>
+		<property name="age" value="33"></property>
+	</bean>
+
+	<!-- 构造函数注入	类型注入 -->
+	<bean id="people4" class="org.apache.spring.entity.People">
+		<constructor-arg type="int" value="4"></constructor-arg>
+		<constructor-arg type="String" value="李四"></constructor-arg>
+		<constructor-arg type="int" value="44"></constructor-arg>
+	</bean>
+	
+    <!-- 构造函数注入	索引注入 -->
+	<bean id="people5" class="org.apache.spring.entity.People">
+		<constructor-arg index="0" value="5"></constructor-arg>
+		<constructor-arg index="1" value="王五"></constructor-arg>
+		<constructor-arg index="2" value="55"></constructor-arg>
+	</bean>
+	
+	<!-- 构造函数注入	混合 -->
+	<bean id="people6" class="org.apache.spring.entity.People">
+		<constructor-arg index="0" value="6"></constructor-arg>
+		<constructor-arg index="1" value="小六"></constructor-arg>
+		<constructor-arg type="int" value="66"></constructor-arg>
+	</bean>
+	
+	<!-- 工厂注入	动态注入 -->
+	<bean id="peopleFactory" class="org.apache.spring.factory.PeopleFactory"></bean>
+	<bean id="people7" factory-bean="peopleFactory" factory-method="createPeople"></bean>
+
+	<!-- 工厂注入	静态注入 -->
+	<bean id="people8" class="org.apache.spring.factory.PeopleFactory" factory-method="createPeopleStatic"></bean>
+	
+	<!-- 继承 -->
+	<bean id="studentAbstract" class="org.apache.spring.entity.Student" abstract="true">
+		<property name="className" value="高三10班"></property>
+		<property name="age" value="19"></property>
+	</bean>
+	
+	<bean id="jack" parent="studentAbstract" >
+		<property name="id" value="1"></property>
+		<property name="name" value="張雙福"></property>
+	</bean>
+	
+	<bean id="tom" parent="studentAbstract">
+		<property name="id" value="2"></property>
+		<property name="name" value="透明"></property>
+		<property name="age" value="20"></property>
+	</bean>
+	
+	<bean id="depends" parent="studentAbstract" depends-on="authority">
+	<property name="id" value="3"></property>
+		<property name="name" value="依赖验证"></property>
+	</bean>
+	<bean id="authority" class="org.apache.spring.service.Authority"></bean>
+	
+	<!-- 引用  scop可以设置每次初始化不同-->
+	<bean id="dog" class="org.apache.spring.entity.Dog" scope="prototype">
+	<property name="name" value="小黑"></property>
+	</bean>
+	<bean id= "myPeople" class="org.apache.spring.entity.People">
+	<property name="age" value="24"></property>
+	<property name="dog" ref="dog"></property>
+	</bean>
+</beans>
